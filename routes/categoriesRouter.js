@@ -1,0 +1,8 @@
+const { Router } = require("express");
+const categoriesRouter = Router()
+const { getCategories, createCategory, updateCategory, deleteCategory } = require("../controllers/categoriesController")
+
+categoriesRouter.get("/", getCategories)
+categoriesRouter.post("/create", createCategory)
+categoriesRouter.put("/update" , updateCategory)
+categoriesRouter.delete("/delete", deleteCategory)

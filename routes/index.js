@@ -7,7 +7,7 @@ router.use('/product', product)
 router.use('/products', products)
 router.use('/categories', categories);
 router.use('/administrator', administrator);
-router.use('/sales', sales);
+router.use('/sales', sales);//ventas
 router.use('/stock',stock);
-router.use('/record',record);
+router.use('/record',record);// registro
 router.use('/login',login);
