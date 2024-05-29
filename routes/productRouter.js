@@ -4,5 +4,7 @@ const { getProducts, getProduct, createProduct, updateProduct, deleteProduct } =
 
 productRouter.post("/create", createProduct)
 productRouter.get("/" , getProduct )
-usersRouter.put ("/:id" , updateProduct) 
-usersRouter.delete ("/:id" , deleteProduct) // borrado logico
+productRouter.put ("/:id" , updateProduct) 
+productRouter.delete ("/:id" , deleteProduct) // borrado logico
+
+module.exports = productRouter

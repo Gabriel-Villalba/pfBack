@@ -7,3 +7,5 @@ usersRouter.post("/create", createUser)// crear usuario
 usersRouter.get ("/", getUsers) // listar usuarios
 usersRouter.put ("/:id" , updateUser) // modificar usuarios
 usersRouter.delete ("/:id" , deleteUser) // borrado logico
+
+module.exports = usersRouter

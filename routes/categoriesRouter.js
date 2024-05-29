@@ -6,3 +6,5 @@ categoriesRouter.get("/", getCategories)
 categoriesRouter.post("/create", createCategory)
 categoriesRouter.put("/update" , updateCategory)
 categoriesRouter.delete("/delete", deleteCategory)
+
+module.exports = categoriesRouter

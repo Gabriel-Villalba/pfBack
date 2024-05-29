@@ -11,3 +11,6 @@ router.use('/sales', sales);//ventas
 router.use('/stock',stock);
 router.use('/record',record);// registro
 router.use('/login',login);
+router.use('/report',report);// reportes
+
+module.exports = router
