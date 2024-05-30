@@ -1,4 +1,4 @@
-const { Users } = require("../db.js");
+const { Users } = require("../Models/Users");
 
 const createUser = async (req , res) =>{
     const user = req.body
@@ -9,7 +9,6 @@ const createUser = async (req , res) =>{
             console.error(error);
 
         }
-
 }
 // , 
 const getUser = async (req , res) =>{
@@ -40,4 +39,4 @@ const deleteUser = async (id) => {
 
         }
 }
-module.exports= createUser , getUser, updateUser
+module.exports= {createUser , getUser, updateUser, deleteUser}

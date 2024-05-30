@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const loginRouter = Router();
-const { check } = require("express-validator");
-const { getUser, createUser , updateUser , deleteUser } = require("../controllers")
+//const { check } = require("express-validator");
+const { getUser, createUser , updateUser , deleteUser } = require("../controllers/login")
 
 
 loginRouter.post("/create", createUser)

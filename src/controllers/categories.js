@@ -1,4 +1,4 @@
-const { Category} = require("../db.js");
+const { Category} = require("../Models/Categories");
 //, , updateCategory, 
 
 const getCategories = async (req , res) =>{
@@ -30,4 +30,4 @@ const deleteCategory = async(req , res) => {
         }
 }
 
-module.exports = getCategories , createCategory, deleteCategory
+module.exports = {getCategories , createCategory, deleteCategory}

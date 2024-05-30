@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+
 const axios = require('axios');
 const Users = require("./Models/Users.js")
 const Categories = require('./Models/Categories.js')
@@ -11,15 +12,14 @@ const Inventary = require('./Models/Inventary.js')
 const Detalles_pedidos = require('./Models/Detalles_pedidos.js')
 const Products_Categories = require('./Models/Products_Categories.js')
 
-//const { v4: uuidv4 } = require('uuid');
-
-
-
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
+//console.log( DB_USER, DB_PASSWORD, DB_HOST, DB_PORT)
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/tienda_de_ropa`, {
-  logging: false, // set to console.log to see the raw SQL queries
-  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/tienda_de_ropa`,
+  {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
 
 const basename = path.basename(__filename);
