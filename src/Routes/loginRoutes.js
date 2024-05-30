@@ -5,7 +5,7 @@ const { getUser, createUser , updateUser , deleteUser } = require("../controller
 
 
 loginRouter.post("/create", createUser)
-loginRouter.get("/" , getUser )
+loginRouter.get("/:id" , getUser )
 loginRouter.put("/:id", updateUser)
 loginRouter.delete("/:id", deleteUser)
 
