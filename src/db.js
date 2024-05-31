@@ -12,7 +12,7 @@ const Inventary = require('./Models/Inventary.js')
 const Detalles_pedidos = require('./Models/Detalles_pedidos.js')
 const Products_Categories = require('./Models/Products_Categories.js')
 
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 //console.log( DB_USER, DB_PASSWORD, DB_HOST, DB_PORT)
 
 const sequelize = new Sequelize(

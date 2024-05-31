@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
         },
         Contraseña: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         Precio: {
             type: DataTypes.DECIMAL,
@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
         },
         Stock: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         Categorie_id: {
             type: DataTypes.INTEGER,

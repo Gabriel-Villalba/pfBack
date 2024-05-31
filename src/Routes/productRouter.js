@@ -7,4 +7,4 @@ productRouter.get("/:id" , getProduct )
 productRouter.put ("/:id" , updateProduct) 
 productRouter.delete ("/:id" , deleteProduct) // borrado logico
 
-module.exports = productRouter
+module.exports = productRouter 
