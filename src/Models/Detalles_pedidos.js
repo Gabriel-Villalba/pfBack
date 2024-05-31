@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-    sequelize.define('Order', {
+    sequelize.define('Detalle_pedido', {
         id: {
             type: DataTypes.UUID,
             primaryKey: true,
@@ -16,19 +16,24 @@ module.exports = (sequelize) => {
             },
             foreignKey: true,
         },
-        Fecha_de_pedido: {
-            type: DataTypes.DATE,
+        Product_id: {
+            type: DataTypes.UUID,
             allowNull: false,
-            defaultValue: DataTypes.NOW
+            references: {
+                model: 'Products',
+                key: 'id',
+            },
+            foreignKey: true,
         },
-        Estado: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        Cantidad: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         },
-        Total: {
+        Cantidad: {
             type: DataTypes.DECIMAL,
-            allowNull: false,
-        }
+            allowNull: false
+        },
+
+
     }, { timestamps: false });
 }
-
