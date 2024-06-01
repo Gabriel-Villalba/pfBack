@@ -17,10 +17,6 @@ module.exports = (sequelize) => {
             allowNull: false,
             unique: true
         },
-        Contraseña: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         Precio: {
             type: DataTypes.DECIMAL,
             allowNull: false,
@@ -38,6 +34,15 @@ module.exports = (sequelize) => {
             },
         },
         Imagen_URL: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        onOffer: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false 
+        },
+        Brand: {
             type: DataTypes.STRING,
             allowNull: false,
         }

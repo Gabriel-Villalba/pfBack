@@ -29,11 +29,7 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        Cantidad: {
-            type: DataTypes.DECIMAL,
-            allowNull: false
-        },
-
+    
 
     }, { timestamps: false });
 }
