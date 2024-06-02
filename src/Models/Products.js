@@ -4,9 +4,10 @@ module.exports = (sequelize) => {
     sequelize.define('Product', {
         id: {
             type: DataTypes.UUID,
-            primaryKey: true,
+            defaultValue: DataTypes.UUIDV4,
+            unique: true,
             allowNull: false,
-            defaultValue: DataTypes.UUIDV4
+            primaryKey: true,
         },
         Nombre: {
             type: DataTypes.STRING,
@@ -15,11 +16,7 @@ module.exports = (sequelize) => {
         Descripcion: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique: true
-        },
-        Contraseña: {
-            type: DataTypes.STRING,
-            allowNull: true,
+        
         },
         Precio: {
             type: DataTypes.DECIMAL,
@@ -29,15 +26,17 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: true,
         },
-        Categorie_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Categories',
-                key: 'id',
-            },
-        },
+
         Imagen_URL: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        onOffer: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false 
+        },
+        Brand: {
             type: DataTypes.STRING,
             allowNull: false,
         }
