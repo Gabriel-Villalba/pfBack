@@ -2,7 +2,7 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 
 // Sync the database and start the server
-conn.sync({force: true})
+conn.sync()
   .then(() => {
     server.listen(3000, () => {
       console.log('Server listening at 3000');

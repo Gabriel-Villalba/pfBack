@@ -79,16 +79,16 @@ const categories = [
   { name: 'Formal' }
 ];
 
-/*const cargarCategorias = async () => {
+// const cargarCategorias = async () => {
 
-  try {
-    await Category.bulkCreate(categories);
-    console.log('Categorias cargadas');
-    } catch (error) {
-      console.log(error);
-      }
-      };
-cargarCategorias()*/
+//   try {
+//     await Category.bulkCreate(categories);
+//     console.log('Categorias cargadas');
+//     } catch (error) {
+//       console.log(error);
+//       } 
+//       };
+// cargarCategorias()
 //     await sequelize.sync();
 
 //     await Category.bulkCreate(categories);
@@ -252,49 +252,49 @@ const products = [
   }
 ];
 
-/*const cargarProductos = async () => {
-  try {
-    //await cargarCategorias(); 
-    const categorias = await Category.findAll();
-    //console.log('categorias',categorias)
-    const mapearCategorias = categorias.reduce((map, tategory) => {
-      map[tategory.category] = tategory.id;
-      return map;
-    }, {});
-    const descripcion = new Set();
-    const validarCategoriasYproductos = products.map(product => {
-      const categoriaId = mapearCategorias[product.CategoriaNombre];
-    //console.log('categoriaId',categoriaId)
-      if (!categoriaId) {
-        throw new Error(`Categoría no encontrada para el producto: ${product.Nombre}`);
-      }
+// const cargarProductos = async () => {
+//   try {
+//     await cargarCategorias(); 
+//     const categorias = await Category.findAll();
+//     console.log('categorias',categorias)
+//     const mapearCategorias = categorias.reduce((map, tategory) => {
+//       map[tategory.category] = tategory.id;
+//       return map;
+//     }, {});
+//     const descripcion = new Set();
+//     const validarCategoriasYproductos = products.map(product => {
+//       const categoriaId = mapearCategorias[product.CategoriaNombre];
+//     console.log('categoriaId',categoriaId)
+//       if (!categoriaId) {
+//         throw new Error(`Categoría no encontrada para el producto: ${product.Nombre}`);
+//       }
 
-      if (descripcion.has(product.Descripcion)) {
-        throw new Error(`Descripción duplicada para el producto: ${product.Nombre}`);
-      }
-      descripcion.add(product.Descripcion);
+//       if (descripcion.has(product.Descripcion)) {
+//         throw new Error(`Descripción duplicada para el producto: ${product.Nombre}`);
+//       }
+//       descripcion.add(product.Descripcion);
 
-      //console.log('descripcion',descripcion)
+//       console.log('descripcion',descripcion)
 
-      // return {
-      //   id: uuidv4(),
-      //   ...product,
-      //   Categorie_id: categoriaId
-      // };
-    });
+//       return {
+//         id: uuidv4(),
+//         ...product,
+//         Categorie_id: categoriaId
+//       };
+//     });
 
-    //console.log('validarCategoriasYproductos',validarCategoriasYproductos)
+//     console.log('validarCategoriasYproductos',validarCategoriasYproductos)
 
-    await Product.bulkCreate(validarCategoriasYproductos);
-    console.log('Productos creados exitosamente.');
+//     await Product.bulkCreate(validarCategoriasYproductos);
+//     console.log('Productos creados exitosamente.');
 
-  } catch (error) {
-    console.error('Error al crear los productos:', error);
+//   } catch (error) {
+//     console.error('Error al crear los productos:', error);
 
-  } finally {
-    await sequelize.close();
-  }
-};*/
+//   } finally {
+//     await sequelize.close();
+//   }
+// };
 
  //cargarProductos();
 
