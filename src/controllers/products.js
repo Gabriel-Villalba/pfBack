@@ -1,32 +1,21 @@
-const { Product, Category } = require("../db");
-//const {  } = require("../Models/Categories");
+const { Product, Category } = require("../db.js");
 
 // traigo todos los productos de la db
-const getProducts = async () => {
+const getProducts = async (req , res) => {
   try {
+    
     const products = await Product.findAll({
       include: {
         //Incluime el model Category
         model: Category,
         //TRAEME EL ATRIBUTO NAME
         attributes: ["name"],
-        //MEDIANTE LOS ATRIBUTOS, VA SIEMPRE, BUENA PRACTICA
+        
         through: {},
       },
     });
-
-    const info = products.map((obj) => {
-      return {
-        nombre: obj.Nombre,
-        descripcion: obj.Descripcion,
-        precio: obj.Precio,
-        stock: obj.Stock,
-        img: obj.Imagen_URL,
-        //
-        categories: obj.category?.map((el) => el.category),
-      };
-    });
-    return info;
+    return res.status(200).json(products);
+    
   } catch (error) {
     console.error("Error al obtener los datos:", error);
   }
