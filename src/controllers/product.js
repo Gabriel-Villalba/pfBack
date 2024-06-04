@@ -1,15 +1,15 @@
-const { Product ,Category } = require("../db.js");
+const { Product, Category } = require("../db.js");
 //const { Category } = require("../Models/Categories");
 
 //detail
 const getProduct = async (req, res) => {
-  const { Nombre } = req.params;
+  const { id } = req.params;
   try {
-    if (!Nombre) {
+    if (!id) {
       return res.status(400).send("Ingrese un producto");
     }
     const producto = await Product.findOne({ 
-      where: { Nombre }, 
+      where: { id }, 
       include: [
       {
         model: Category,
@@ -129,7 +129,7 @@ const deleteProduct = async (req, res) => {
   //   res.send('Done');
   // } catch (error) {
   //   return res.status(404).send("Error")
-  // }
+  // } 
 };
 //update
 
@@ -161,7 +161,7 @@ const updateProduct = async (req, res) => {
     existingProduct.Imagen_URL = Imagen_URL;
     existingProduct.onOffer = onOffer;
     existingProduct.Brand = Brand;
-    existingProduct.Categories.Category[name] = name;
+    existingProduct.Categories.map((category)=> category.name)
     // Guarda los cambios en la base de datos
     console.log(existingProduct)
     await existingProduct.save();
