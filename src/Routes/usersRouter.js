@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const usersRouter = Router()
-const {loginHandler, registerHandler } = require("../controllers/users")
+const { } = require("../controllers/users")
 //const { check } = require("express-validator")
 
-usersRouter.post("/create", registerHandler)// crear usuario
-usersRouter.post("/login", loginHandler)// accede al sistema
+// usersRouter.post("/create", registerHandler)// crear usuario
+// usersRouter.post("/login", loginHandler)// accede al sistema
 
 
 
