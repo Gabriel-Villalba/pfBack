@@ -48,10 +48,9 @@ Detalles_pedidos(sequelize);
 
 
 //const { User, Category, Product, Order, Inv, Detalle_pedido,} = sequelize.models;
-const {Category, Product} = sequelize.models;
+const {User, Order,Category, Product} = sequelize.models;
 
-//Product.belosToMany(Category, { through: Product_Category, foreignKey: 'Product_id', otherKey: 'Category_id' });
-//Category.belongsToMany(Product, { through: Product_Category, foreignKey: 'Category_id', otherKey: 'Product_id' });
+
 Product.belongsToMany(Category, { through: 'Product_Category'},{ timestamps: false });
 Category.belongsToMany(Product, { through: 'Product_Category'},{ timestamps: false });
 
@@ -62,8 +61,8 @@ Category.belongsToMany(Product, { through: 'Product_Category'},{ timestamps: fal
 // Product.hasOne(Inv, { foreignKey: 'Product_id' });
 // Inv.belongsTo(Product, { foreignKey: 'Product_id' });
 
-// User.hasMany(Order, { foreignKey: 'User_id' });
-// Order.belongsTo(User, { foreignKey: 'User_id' });
+User.hasMany(Order, { foreignKey: 'User_id' });
+Order.belongsTo(User, { foreignKey: 'User_id' });
 
 
 

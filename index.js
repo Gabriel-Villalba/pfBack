@@ -4,8 +4,8 @@ const { conn } = require('./src/db.js');
 // Sync the database and start the server
 conn.sync()
   .then(() => {
-    server.listen(3000, () => {
-      console.log('Server listening at 3000');
+    server.listen(3001, () => {
+      console.log('Server listening at 3001');
     });
   })
   .catch(err => {

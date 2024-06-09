@@ -6,7 +6,7 @@ const categories = require ("./categoriesRouter.js")
 //const sales = require ("./salesRouter.js")
 //const stock = require ("./stockRouter.js")
 //const record = require ("./recordRoutes.js")
-const login = require ("./loginRoutes.js")
+//const login = require ("./loginRoutes.js")
 //const report = require ("./reportRouter.js")
 
 const router = Router();
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-//router.use('/users', users);
+router.use('/users', users);
 router.use('/product', product)
 router.use('/products', products)
 router.use('/categories', categories);

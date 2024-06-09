@@ -4,11 +4,15 @@ const { Category} = require("../db");
 
 const getCategories = async (req , res) =>{
     try {   
-        const categories = await Category.findAll();    
+        const categories = await Category.findAll();  
+                const categoryNames = categories.map((category) => category.name);
+                //console.log(categoryNames);
         return res.status(200).json(categories);
+
         } catch (error) {
-            return res.status(200).send(error.message)
+            return res.status(400).send(error.message)
         }
+
 }
 
 const createCategory = async(req , res) => {

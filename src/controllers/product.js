@@ -1,14 +1,22 @@
 const { Product ,Category } = require("../db.js");
-//const { Category } = require("../Models/Categories");
 
+//********detail***********//
 //detail
 const getProduct = async (req, res) => {
-  const { name } = req.params;
+  const { id } = req.params;
   try {
-    if (!name) {
-      return res.status(400).send("Ingrese un nombre");
+    if (!id) {
+      return res.status(400).send("Ingrese un producto");
     }
-    const producto = await Product.findOne({ where: { name } });
+    const producto = await Product.findOne({ 
+      where: { id }, 
+      include: [
+      {
+        model: Category,
+        attributes: ["name"]
+      }
+    ]
+     });
     if (!producto) {
       return res.status(400).send("producto no existe");
     }
@@ -22,7 +30,6 @@ const getProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { Nombre, Precio, Descripcion,Stock, Imagen_URL, onOffer, Brand, name} = req.body;
-    //console.log(req.body)
     // Verifica si todos los campos obligatorios están presentes
     if (!Nombre || !Precio || !Descripcion || !Imagen_URL) {
       return res.status(400).send("Completar los campos obligatorios");
@@ -32,7 +39,6 @@ const createProduct = async (req, res) => {
     if (producto) {
       return res.status(400).send("Producto ya existe");
     }
-    //console.log(" por aca si")
     // Crea un nuevo producto
     const newProduct = await Product.create({
       Nombre,
@@ -43,12 +49,11 @@ const createProduct = async (req, res) => {
       onOffer,
       Brand
     });
-    //console.log(" por aca tambien")
     // Asocia las categorías al producto
     const categories = await Category.findAll({ where: {name: name } });
    
     newProduct.addCategory(categories);
-    //
+
     return res.status(200).send("Producto creado exitosamente");
   } catch (error) {
     console.error("Error al crear el producto:",error.message);
