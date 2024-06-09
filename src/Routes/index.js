@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-//router.use('/users', users);
+router.use('/users', users);
 router.use('/product', product)
 router.use('/products', products)
 router.use('/categories', categories);

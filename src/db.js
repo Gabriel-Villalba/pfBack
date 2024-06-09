@@ -48,7 +48,7 @@ Detalles_pedidos(sequelize);
 
 
 //const { User, Category, Product, Order, Inv, Detalle_pedido,} = sequelize.models;
-const {Category, Product} = sequelize.models;
+const {Category, Product, User} = sequelize.models;
 
 //Product.belosToMany(Category, { through: Product_Category, foreignKey: 'Product_id', otherKey: 'Category_id' });
 //Category.belongsToMany(Product, { through: Product_Category, foreignKey: 'Category_id', otherKey: 'Product_id' });
@@ -74,7 +74,7 @@ const categories = [
   
   { name: 'Deportivo' },
  
-  { name: 'Conjuntos' },
+  { name: 'Conjuntos' }, 
   
   { name: 'Formal' }
 ];
@@ -298,6 +298,42 @@ const products = [
 
  //cargarProductos();
 
+
+const cargarUsers = async () => {
+
+  try {
+    await User.bulkCreate(user);
+    console.log('Usuarios cargados');
+    } catch (error) {
+      console.log(error);
+      } 
+      };
+
+
+
+ const user = [
+  { Nombre: "Leonardo",
+    Email: "ingfleire25@gmail.com",
+    Contraseña:"papa..22",
+    Direccion:"la casa de las conejitas",
+    Telefono: "04121049760"
+  },
+  {
+      Nombre: "carla",
+  Email: "Carla@gmail.com",
+  Contraseña:"papa..33",
+  Direccion:"la casa de las conejitas",
+  Telefono: "04121049760"
+  },
+  {
+      Nombre: "Gabriel",
+  Email: "gabriel@gmail.com",
+  Contraseña:"papa..44",
+  Direccion:"la casa de las conejitas",
+  Telefono: "04121049760"
+}
+]
+// cargarUsers()
 module.exports = {
 
 ...sequelize.models, 
