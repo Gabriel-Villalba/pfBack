@@ -1,12 +1,13 @@
+require('dotenv').config();
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-require('dotenv').config();
-const port = process.env.PORT|| 3000
+const { PORT } = process.env || 3001;
+
 // Sync the database and start the server
 conn.sync()
   .then(() => {
-    server.listen(port, () => {
-      console.log('Server listening at 3001');
+    server.listen(PORT, () => {
+      console.log(`Server listening at ${PORT}`);
     });
   })
   .catch(err => {
