@@ -1,10 +1,10 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-
+const PORT = process.env || 3001
 // Sync the database and start the server
 conn.sync()
   .then(() => {
-    server.listen(3001, () => {
+    server.listen(PORT, () => {
       console.log('Server listening at 3001');
     });
   })
