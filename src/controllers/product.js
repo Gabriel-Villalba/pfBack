@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-const { Product ,Category } = require("../db.js");
-=======
 const { Product, Category } = require("../db.js");
 //const { Category } = require("../Models/Categories");
->>>>>>> a4aa3d9ccb0cc38e6b2b1515dc33e5f119b22ddd
 
 //********detail***********//
 //detail
@@ -21,10 +17,6 @@ const getProduct = async (req, res) => {
         attributes: ["name"]
       }
     ]
-<<<<<<< HEAD
-=======
-
->>>>>>> a4aa3d9ccb0cc38e6b2b1515dc33e5f119b22ddd
      });
     if (!producto) {
       return res.status(400).send("producto no existe");
@@ -62,13 +54,8 @@ const createProduct = async (req, res) => {
     const categories = await Category.findAll({ where: {name: name } });
    
     newProduct.addCategory(categories);
-<<<<<<< HEAD
-
-    return res.status(200).send("Producto creado exitosamente");
-=======
     //
     return res.status(200).json(newProduct);
->>>>>>> a4aa3d9ccb0cc38e6b2b1515dc33e5f119b22ddd
   } catch (error) {
     console.error("Error al crear el producto:",error.message);
     return res.status(500).send("Error interno del servidor");
