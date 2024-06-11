@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
-const path = require('path');
+const path = require('path'); 
 const axios = require('axios');
 const Users = require('./Models/Users.js')
 const Categories = require('./Models/Categories.js')
@@ -101,7 +101,7 @@ const categories = [
 //
 const products = [
   {
-    Nombre: "Vestido rojo",
+    Nombre: "Blusa Blanca",
     Descripcion: "Blusa blanca.",
     Precio: "29.99",
     Stock: "22",

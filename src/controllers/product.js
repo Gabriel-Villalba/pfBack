@@ -161,7 +161,7 @@ const updateProduct = async (req, res) => {
     existingProduct.Imagen_URL = Imagen_URL;
     existingProduct.onOffer = onOffer;
     existingProduct.Brand = Brand;
-    existingProduct.Categories.map((category)=> category.name)
+    existingProduct.Categories.map((category)=> category.name = name)
     // Guarda los cambios en la base de datos
     console.log(existingProduct)
     await existingProduct.save();
