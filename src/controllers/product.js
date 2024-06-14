@@ -1,4 +1,6 @@
 const { Product, Category } = require("../db.js");
+
+const { Op } = require("sequelize");
 //const { Category } = require("../Models/Categories");
 
 //detail
@@ -27,7 +29,41 @@ const getProduct = async (req, res) => {
   }
 };
 
-// *********************CREATE************************
+//*********************BUSQUEDA POR NOMBRE************/
+
+const getProductName = async (req, res) => {
+  //console.log(req.params)
+  const { name } = req.params;
+    try {
+    if (!name) {
+      return res.status(400).send("Ingrese un producto");
+    }
+    // Buscar productos que contengan el nombre proporcionado
+    const productos = await Product.findAll({
+      where: {
+        Nombre: {
+          [Op.iLike]: `%${name}%`, // Búsqueda insensible a mayúsculas/minúsculas
+        },
+      },
+      include: [
+        {
+          model: Category,
+          attributes: ["name"],
+        },
+      ],
+    });
+
+    if (productos.length === 0) {
+      return res.status(404).send("No se encontraron productos");
+    }
+    return res.status(200).json(productos);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+
+// *********************CREATE************************/
 const createProduct = async (req, res) => {
   try {
     const { Nombre, Precio, Descripcion,Stock, Imagen_URL, onOffer, Brand, name} = req.body;
@@ -175,4 +211,4 @@ const updateProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProduct, createProduct, deleteProduct, updateProduct };
+module.exports = { getProduct, getProductName, createProduct, deleteProduct, updateProduct };
