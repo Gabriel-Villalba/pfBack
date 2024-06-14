@@ -3,6 +3,7 @@ const { Product, Category } = require("../db.js");
 const { Op } = require("sequelize");
 //const { Category } = require("../Models/Categories");
 
+//********detail***********//
 //detail
 const getProduct = async (req, res) => {
   const { id } = req.params;
@@ -18,7 +19,6 @@ const getProduct = async (req, res) => {
         attributes: ["name"]
       }
     ]
-
      });
     if (!producto) {
       return res.status(400).send("producto no existe");
@@ -67,7 +67,6 @@ const getProductName = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { Nombre, Precio, Descripcion,Stock, Imagen_URL, onOffer, Brand, name} = req.body;
-    //console.log(req.body)
     // Verifica si todos los campos obligatorios están presentes
     if (!Nombre || !Precio || !Descripcion || !Imagen_URL) {
       return res.status(400).send("Completar los campos obligatorios");
@@ -77,7 +76,6 @@ const createProduct = async (req, res) => {
     if (producto) {
       return res.status(400).send("Producto ya existe");
     }
-    //console.log(" por aca si")
     // Crea un nuevo producto
     const newProduct = await Product.create({
       Nombre,
@@ -88,7 +86,6 @@ const createProduct = async (req, res) => {
       onOffer,
       Brand
     });
-    //console.log(" por aca tambien")
     // Asocia las categorías al producto
     const categories = await Category.findAll({ where: {name: name } });
    
