@@ -20,29 +20,29 @@ module.exports = (sequelize) => {
         },
         Contraseña: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         Direccion: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         Telefono: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         Fecha_de_registro: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
             defaultValue: DataTypes.NOW
         },
         isAdmin: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            allowNull: true,
             defaultValue: false
         },
         isLogin:{
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            allowNull: true,
             defaultValue: false
         }
     }, { timestamps: false });

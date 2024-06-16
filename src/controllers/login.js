@@ -1,4 +1,4 @@
-const { User } = require('../db')
+const { User, Cart } = require('../db')
 
 // mi funcion "validate" le llega por parametros un email y una passw
 
@@ -43,38 +43,66 @@ const loginHandler = async (req, res) => {
     }
 }
 
-const registerHandler = async (req, res) => {
+const registerHandler = async (req, res) => {//*varios cambios en este controller, 
+                                             //*verifica si existe el usuario y si tiene carrito
     try {
-
-// traigo del front name,email y Contraseña
-
-        const { Email, Contraseña } = req.body
-
-        // compruebo que los campos esten llenos
         
-        if( !Email || !Contraseña){
-            return res.status(400).json({access: 'Datos incompletos'})
-         }
-
-// verifico si no existe otro gmail en mi db
-
-        const verificateEmail = await User.findOne({ where: { Email } })
-
-        if (verificateEmail) {
-            return res.status(400).json({ access: 'Este correo ya existe' })
+        // Extraemos los datos del front-end: nombre, email y contraseña
+        const { Nombre, Email } = req.body;
+        console.log(Nombre, Email)
+        // Comprobamos que los campos estén llenos
+        if (!Nombre || !Email) {
+            return res.status(400).json({ access: 'Datos incompletos' });
         }
+        // Verificamos si ya existe un usuario con el mismo email en la base de datos
+        const existingUser = await User.findOne({ where: { Email } });
 
-        
-// creo el registro en db
+        if (existingUser) {
+            // El usuario ya existe, verificamos si tiene un carrito
+            const userCart = await findUserCart(existingUser.id);
+            
+            if (userCart) {
+                console.log(`El usuario ${existingUser.username} tiene un carrito.`);
+                res.status(200).json({ hasCart: true, cart: userCart });
+            } else {
+                console.log('Crear un carrito para el usuario...');
+                //const cartCreate = createCart(idUser)
+                res.status(200).json({ hasCart: false });
+            }
+        } else {
+            console.log('Usuario no encontrado. Crear nuevo usuario...');
+            res.status(200).json({existing: false});
+        }
+    } catch (error) {
+        return res.status(400).json({ error: error.message });
+    }
+};
 
-        await User.create({ Email, Contraseña })
+//********VALIDAR SI TIENE CARRITO*************** */
+async function findUserCart(id) {
+    try {
+        const user = await User.findByPk(id, {
+            include: Cart // Incluye la relación con el carrito
+        });
+       // console.log(user)
 
-        return res.status(200).json({ access: Email + ' Registro Exitoso' })
-
-    } catch(error){
-        return res.status(400).json({error: error.message})
+        if (user && user.CartId) {
+            console.log(`El usuario con ID ${id} tiene un carrito.`);
+            return user.Cart;
+        } else {
+            console.log(`El usuario con ID ${id} no tiene un carrito.`);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al buscar el carrito del usuario:', error);
+        return null;
     }
 }
+
+
+
+
+
 
 module.exports = {
     loginHandler,
