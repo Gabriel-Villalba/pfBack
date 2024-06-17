@@ -10,6 +10,7 @@ const Orders = require('./Models/Orders.js')
 const Inventary = require('./Models/Inventary.js')
 const Detalles_pedidos = require('./Models/Detalles_pedidos.js');
 const Carrito = require('./Models/Carrito.js');
+const ProductCart = require("./Models/ProductCart")
 //const Product_Categories = require('./Models/Products_Categories.js')
 //const { v4: uuidv4 } = require('uuid');
 
@@ -53,10 +54,11 @@ Orders(sequelize);
 Inventary(sequelize);
 Detalles_pedidos(sequelize);
 Carrito(sequelize);
+ProductCart(sequelize)
 
 
 //const { User, Category, Product, Order, Inv, Detalle_pedido,} = sequelize.models;
-const {User, Order,Category, Product, Cart} = sequelize.models;
+const {User, Order,Category, Product, Cart, ProducCart} = sequelize.models;
 
 
 Product.belongsToMany(Category, { through: 'Product_Category'},{ timestamps: false });
@@ -75,6 +77,8 @@ Order.belongsTo(User, { foreignKey: 'User_id' });
 User.belongsTo(Cart, { throug:'userCart' });
 Cart.belongsTo(User, { throug:'userCart' });
 
+Cart.hasMany(Product ,{throug: 'cartProduct'})
+Product.belongsTo(Cart , {throug: 'cartProduct'})
 
 const categories = [
  

@@ -1,26 +1,19 @@
 const { User } = require('../db')
-
-
 const createUser= async (Nombre, Email)=>{
-    //console.log("a crear")
+    console.log("a crear")
     try {  
-        //console.log(Nombre, Email)
+        console.log(Nombre, Email)
         //const { Nombre, Email, isAdmin } = req.body;
         if(!Nombre|| !Email  ){
           return ("faltan datos")
        }
         // Registrar el usuario nuevo
-        await User.create({
+    const newUser= await User.create({
           Nombre,
           Email,
-          //Contraseña,
-          //Direccion,
-          //Telefono,
-          //Fecha_de_registro,
           isAdmin:false,
         });
-      
-        return("Usuario creado exitosamente" );
+        return newUser
       } catch (error) {
         console.error("Error en la validación:", error);
         res.status(500).json({ error: "Error interno del servidor" });

@@ -87,9 +87,9 @@ const newUser = async (req, res) => {
       console.log("usuario ya existe")
       return res.status(400).send("usuario ya existe");
     }
-    await createUser(Nombre, Email);
-    console.log("Usuario creado exitosamente");
-    res.status(200).json({ message: "Usuario creado exitosamente" });
+    const usuarioCreado = await createUser(Nombre, Email);
+    console.log("usuario creado :",usuarioCreado.dataValues.id);
+    res.status(200).json({ message: "Usuario creado exitosamente", id:usuarioCreado.dataValues.id });
   } catch (error) {
     console.error("Error al crear el usuario:", error.message);
     res.status(500).json({ error: "Error interno del servidor" });
@@ -99,14 +99,15 @@ const newUser = async (req, res) => {
 
 ///**********OBTENER USUARIO****************** */
 const getUsers = async (req, res)=>{
-    const {Nombre}= req.params
+    const {email}= req.params
     try {
-      if (!Nombre) {
-        return res.status(400).send("Ingrese un Nombre");
+      if (!email) {
+        return res.status(400).send("Ingrese un email");
       }
       const user = await User.findOne({ 
-        where: {Nombre}, 
+        where: {email}, 
        });
+       console.log(user)
       if (!user) {
         return res.status(400).send("Usuario inexistente");
       }

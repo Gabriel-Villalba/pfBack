@@ -1,22 +1,23 @@
 const{Cart, User} = require ("../db.js")
 
 const createCart = async (req, res) => {
-  try {
+  try {4
+    const {UserId }= req.body;
+    const{id} = req.body
+    console.log("aca no hay nada", UserId || id)
     
-    const { idUser } = req.body;
 
-    if (!idUser) {
+    if (!UserId) {
       return res.status(400).send("Completar los campos obligatorios");
     }
-
     // Crear un nuevo carrito
     const newCart = await Cart.create({
       idsProduct: 0,
       amount: 0
     });
-    const id = idUser
+    const ids = UserId
     // Asociar el carrito al usuario
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(ids);
     if (!user) {
       return res.status(404).send("Usuario no encontrado");
     }
@@ -27,7 +28,7 @@ const createCart = async (req, res) => {
     return res.status(200).json(newCart);
   } catch (error) {
     console.error("Error al crear el carrito:", error.message);
-    //return res.status(500).send("Error interno del servidor");
+    return res.status(500).send("Error interno del servidor");
   }
 };
 
@@ -47,7 +48,7 @@ const addProductToCart = async (req, res) => {
       //**si no tiene carrito le creo uno */
       if (!cart) {
         createCart(user)
-      } else {
+      } 
         //*si ya tiene carrito le agrego el producto
           const productInCart = await cart.getProducts({ where: { id_products: productId } });
           if (productInCart.length > 0) {
@@ -55,7 +56,7 @@ const addProductToCart = async (req, res) => {
             } else {
               await cart.addProduct(productId, { through: { amount } });
             }
-        }
+        
       res.json({ message: "Product added to cart successfully" });
     } catch (error) {
                 console.error(error);

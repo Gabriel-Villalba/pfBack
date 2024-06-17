@@ -3,12 +3,13 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { PORT } = process.env || 3001;
 
-// Sync the database and start the server
-conn.sync()
+
+conn.sync() 
+//conn.sync({force:true})
   .then(() => {
     server.listen(PORT, () => {
       console.log(`Server listening at ${PORT}`);
-    });
+    });   
   })
   .catch(err => {
     console.error('Error syncing database:', err);
@@ -16,3 +17,4 @@ conn.sync()
       console.error('Parent error:', err.parent);
     }
   }); 
+

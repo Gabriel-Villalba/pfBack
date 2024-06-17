@@ -1,4 +1,5 @@
 const { User, Cart } = require('../db')
+const createUser = require("../handlers/createUsers")
 
 // mi funcion "validate" le llega por parametros un email y una passw
 
@@ -49,29 +50,32 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         
         // Extraemos los datos del front-end: nombre, email y contraseña
         const { Nombre, Email } = req.body;
-        console.log(Nombre, Email)
+       // console.log(Nombre, Email)
         // Comprobamos que los campos estén llenos
         if (!Nombre || !Email) {
             return res.status(400).json({ access: 'Datos incompletos' });
         }
         // Verificamos si ya existe un usuario con el mismo email en la base de datos
         const existingUser = await User.findOne({ where: { Email } });
-
+        
         if (existingUser) {
             // El usuario ya existe, verificamos si tiene un carrito
             const userCart = await findUserCart(existingUser.id);
-            
+            console.log("EL ID del carrito es : ",existingUser.dataValues.CartId)
+
             if (userCart) {
-                console.log(`El usuario ${existingUser.username} tiene un carrito.`);
-                res.status(200).json({ hasCart: true, cart: userCart });
+                console.log(`El usuario ${existingUser.Nombre} tiene un carrito.`);
+                res.status(200).json({ hasCart: true, cartId:existingUser.dataValues.CartId , id:existingUser.id });
             } else {
                 console.log('Crear un carrito para el usuario...');
-                //const cartCreate = createCart(idUser)
-                res.status(200).json({ hasCart: false });
+                res.status(200).json({ hasCart: false,id:existingUser.id });
             }
         } else {
             console.log('Usuario no encontrado. Crear nuevo usuario...');
-            res.status(200).json({existing: false});
+            // Creamos un nuevo usuario
+            const user = await User.create({ Nombre, Email });
+           console.log(user.dataValues.id)
+            res.status(200).json({existing: true, hasCart: false, id :user.dataValues.id  });
         }
     } catch (error) {
         return res.status(400).json({ error: error.message });
