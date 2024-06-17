@@ -167,5 +167,6 @@ const getAllUsers = async (req , res) => {
 module.exports = {
     newUser, 
     getUsers,
-    getAllUsers
+    getAllUsers,
+    registerHandler
 }

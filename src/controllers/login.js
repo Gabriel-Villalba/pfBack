@@ -1,4 +1,5 @@
 const { User } = require('../db')
+const {sendEmail, getTemplate} = require("../email/nodemailer");
 
 // mi funcion "validate" le llega por parametros un email y una passw
 
@@ -17,23 +18,27 @@ const validate = async (Email,Contraseña) => {
     } else {
         return false
     }
-}
-
-
-const loginHandler = async (req, res) => {
-
-    // traigo del front email/passw
-
-    const { Email, Contraseña } = req.body
-
-    try {
-
-        // con mi funcion "validate" verifico si esta registrado o no
-        // pasandole por parametros el email y la passw del front
-
-        const login = await validate(Email, Contraseña)
+    }
+    
+    
+    const loginHandler = async (req, res) => {
+        
+        // traigo del front email/passw
+        
+        const { Email, Contraseña, Nombre } = req.body
+        
+        try {
+            
+            // con mi funcion "validate" verifico si esta registrado o no
+            // pasandole por parametros el email y la passw del front
+            
+            const login = await validate(Email, Contraseña)
+         
 
         if (login) {
+            const html = getTemplate("bienvenida", Nombre);
+         await sendEmail(Email,`Bienvenido ${Nombre}`, html)
+
             res.status(200).json({ access: 'Se ha ingresado' })
         } else {
             res.status(200).json({ access: 'Clave incorrecta' })

@@ -90,7 +90,9 @@ const createProduct = async (req, res) => {
     const categories = await Category.findAll({ where: {name: name } });
    
     newProduct.addCategory(categories);
-    //
+    
+    
+
     return res.status(200).json(newProduct);
   } catch (error) {
     console.error("Error al crear el producto:",error.message);
