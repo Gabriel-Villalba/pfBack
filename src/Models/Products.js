@@ -4,9 +4,10 @@ module.exports = (sequelize) => {
     sequelize.define('Product', {
         id: {
             type: DataTypes.UUID,
-            primaryKey: true,
+            defaultValue: DataTypes.UUIDV4,
+            unique: true,
             allowNull: false,
-            defaultValue: DataTypes.UUIDV4
+            primaryKey: true,
         },
         Nombre: {
             type: DataTypes.STRING,
@@ -15,7 +16,11 @@ module.exports = (sequelize) => {
         Descripcion: {
             type: DataTypes.STRING,
             allowNull: false,
+<<<<<<< HEAD
             unique: true
+=======
+        
+>>>>>>> 5c2dd52033de96aa9642e7bebe0904837098ff60
         },
         Precio: {
             type: DataTypes.DECIMAL,
@@ -23,16 +28,9 @@ module.exports = (sequelize) => {
         },
         Stock: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
-        Categorie_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'Categories',
-                key: 'id',
-            },
-        },
+
         Imagen_URL: {
             type: DataTypes.STRING,
             allowNull: false,
