@@ -45,12 +45,15 @@ sequelize.authenticate()
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
-const modelsDirectory = path.join(__dirname, 'models');
+
+// Verificación de la existencia del directorio 'Models'
+const modelsDirectory = path.join(__dirname, 'Models');
 if (!fs.existsSync(modelsDirectory)) {
-  console.error(`Error: Directory 'models' does not exist.`);
+  console.error(`Error: Directory 'Models' does not exist.`);
   process.exit(1);
 }
 
+// Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
 fs.readdirSync(modelsDirectory)
   .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach((file) => {
@@ -58,10 +61,17 @@ fs.readdirSync(modelsDirectory)
     if (fs.existsSync(filePath)) {
       modelDefiners.push(require(filePath));
     } else {
-      console.error(`Error: File '${file}' does not exist in 'models' directory.`);
+      console.error(`Error: File '${file}' does not exist in 'Models' directory.`);
       process.exit(1);
     }
   });
+
+// Injectamos la conexion (sequelize) a todos los modelos
+modelDefiners.forEach(model => model(sequelize));
+// Capitalizamos los nombres de los modelos ie: product => Product
+let entries = Object.entries(sequelize.models);
+let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
+sequelize.models = Object.fromEntries(capsEntries);
 
 Users(sequelize);
 Categories(sequelize);
