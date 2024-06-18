@@ -1,6 +1,10 @@
 const express = require('express')
-const server = express()
 const routes = require('./routes/index.js');
+
+const cors = require("cors");
+const server = express();
+server.use(cors());
+
 const morgan = require('morgan')
 server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

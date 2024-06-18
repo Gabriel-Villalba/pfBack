@@ -1,5 +1,5 @@
 const { User } = require('../db')
-const { check, validationResult, body } = require("express-validator");
+// const { check, validationResult, body } = require("express-validator");
 
 // mi funcion "validate" le llega por parametros un email y una passw
 

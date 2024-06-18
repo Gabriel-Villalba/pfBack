@@ -16,11 +16,11 @@ module.exports = (sequelize) => {
         Descripcion: {
             type: DataTypes.STRING,
             allowNull: false,
-<<<<<<< HEAD
+
             unique: true
-=======
+
         
->>>>>>> 5c2dd52033de96aa9642e7bebe0904837098ff60
+
         },
         Precio: {
             type: DataTypes.DECIMAL,

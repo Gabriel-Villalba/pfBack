@@ -40,17 +40,17 @@ module.exports = (sequelize) => {
             allowNull: false,
             defaultValue: false
         },
-<<<<<<< HEAD
+
         isActiv: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
-=======
+        },
         isLogin:{
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
->>>>>>> 5c2dd52033de96aa9642e7bebe0904837098ff60
+
         }
     }, { timestamps: false });
 }  

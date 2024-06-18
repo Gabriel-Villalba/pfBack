@@ -1,18 +1,7 @@
-<<<<<<< HEAD
-const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
-
-
-conn.sync().then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001');
-  });
-});
-=======
 require('dotenv').config();
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const { PORT } = process.env || 3001;
+const PORT = 3001;
 
 // Sync the database and start the server
 conn.sync()
@@ -27,4 +16,4 @@ conn.sync()
       console.error('Parent error:', err.parent);
     }
   }); 
->>>>>>> 5c2dd52033de96aa9642e7bebe0904837098ff60
+
