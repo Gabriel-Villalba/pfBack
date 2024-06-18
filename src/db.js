@@ -16,11 +16,15 @@ const Detalles_pedidos = require('./Models/Detalles_pedidos.js')
 
 //const { v4: uuidv4 } = require('uuid');
 
+console.log('DB_USER:', process.env.DB_USER);
+console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
+console.log('DB_HOST:', process.env.DB_HOST);
+console.log('DB_PORT:', process.env.DB_PORT);
+console.log('DB_NAME:', process.env.DB_NAME);
 
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_DEPLOY, DB_NAME } = process.env;
 
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_DEPLOY } = process.env;
-
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/tienda_de_ropa`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
