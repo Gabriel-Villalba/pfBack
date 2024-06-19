@@ -15,17 +15,35 @@ const Detalles_pedidos = require('./Models/Detalles_pedidos.js')
 //const Product_Categories = require('./Models/Products_Categories.js')
 
 //const { v4: uuidv4 } = require('uuid');
-
-// console.log('DB_USER:', process.env.DB_USER);
-// console.log('DB_PASSWORD:', process.env.DB_PASSWORD);
-// console.log('DB_HOST:', process.env.DB_H
-// console.log('DB_NAME:', process.env.DB_NAME);
-
+console.log(process.env);
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 
+
+console.log('DB_USER:', DB_USER);
+console.log('DB_PASSWORD:', DB_PASSWORD);
+console.log('DB_HOST:', DB_HOST);
+console.log('DB_PORT:', DB_PORT);
+console.log('DB_NAME:', DB_NAME);
+
+// Verificar que todas las variables necesarias estén presentes
+if (!DB_USER || !DB_PASSWORD || !DB_HOST || !DB_PORT || !DB_NAME) {
+  throw new Error('Missing necessary database environment variables');
+}
+
+
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
+  dialect: 'postgres', // Agregado explícitamente
   logging: false,
   native: false,
+  dialectOptions: {
+    connectTimeout: 60000,  
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 60000, 
+    idle: 10000,
+  }
 });
 
 
