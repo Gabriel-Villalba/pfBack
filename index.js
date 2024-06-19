@@ -3,8 +3,8 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const PORT = process.env.PORT || 3001; 
 
-console.log('Environment Variables:', process.env);
-console.log('Current Directory:', __dirname);
+// console.log('Environment Variables:', process.env);
+// console.log('Current Directory:', __dirname);
 // Sync the database and start the server
 conn.sync()
   .then(() => {
