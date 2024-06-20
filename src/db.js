@@ -77,8 +77,7 @@ Order.belongsTo(User, { foreignKey: 'User_id' });
 User.belongsTo(Cart, { throug:'userCart' });
 Cart.belongsTo(User, { throug:'userCart' });
 
-Cart.hasMany(Product ,{throug: 'cartProduct'})
-Product.belongsTo(Cart , {throug: 'cartProduct'})
+ProducCart.belongsTo(sequelize.models.Product, {foreignKey: 'id_products'});
 
 const categories = [
  
