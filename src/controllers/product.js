@@ -100,49 +100,8 @@ const createProduct = async (req, res) => {
   }
 };
 
-/*const createProduct = async (req, res) => {
-  const { Nombre, Precio, Descripcion, Categorie_id, Imagen_URL } = req.body;
-  //const product = await validarProcuct(Nombre);//validar si el producto ya existe y
-  console.log(req.body); //si vienen todos los datos
-  /*!Nombre
-    ? res.json({ message: "El producto ya existe" })
-    : await Product.create({
-        Nombre,
-        Precio,
-        Descripcion,
-        Categorie_id,
-        Imagen_URL,
-      });
-
-  const categories = await Category.findAll({ where: { name: category } });
-  newProduct.addCategory(categories);
-
-  res.send("Createado exitosamente!!!");
-      if(!Nombre || !Precio || !Descripcion || !Categorie_id || Imagen_URL){
-          res.status(400).send("Completar los campos obligatorios")
-      }
-  console.log(Nombre)
-
-      const producto = await Product.findOne({where: {Nombre}})
-          if(producto){return res.status(400).send("producto ya existe")}
-
-      const newProduct = await Product.create({ Nombre, Precio,  Descripcion, Categorie_id, Imagen_URL })
-      const categories = await Category.findAll({ where: { name: Category } });
-      newProduct.addCategory(categories);
-      return res.status(200).send("Producto creado exitosamente")
-};*/
-
 //Delete
 const deleteProduct = async (req, res) => {
-  // try {
-  //     req.params? await Product.findByIdAndDelete(req.params.id)
-  //     .then((product) => {res.json(product)})
-  //     .catch((err) => {res.json(err)}):
-  //     res.json({message: "No product found"})
-  //     } catch (error) {
-  //         res.json({message: "No product found"})
-  //         return res.status(404).json({ message: "Producto no encontrado" });
-  //     }
   try {
     const { id } = req.params;
 
@@ -159,12 +118,7 @@ const deleteProduct = async (req, res) => {
     console.error("Error al eliminar la acción:", error);
     res.status(500).json({ error: "Error al eliminar la acción" });
   }
-  //   const { id } = req.params;
-  //   Product.destroy({ where: { id } });
-  //   res.send('Done');
-  // } catch (error) {
-  //   return res.status(404).send("Error")
-  // } 
+ 
 };
 //update
 

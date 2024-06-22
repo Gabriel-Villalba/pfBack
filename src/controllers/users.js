@@ -1,5 +1,6 @@
 const { User } = require('../db')
-const { check, validationResult, body } = require("express-validator");
+const createUser = require("../handlers/createUsers")
+//const { check, validationResult, body } = require("express-validator");
 
 // mi funcion "validate" le llega por parametros un email y una passw
 
@@ -79,70 +80,34 @@ const registerHandler = async (req, res) => {
 
 //************CREAMOS UN NUEVO USUARIO*************************************** */
 const newUser = async (req, res) => {
-  try {  
-    const { Nombre, Email, Contraseña, Direccion, Telefono, Fecha_de_registro } = req.body;
-    const isAdmi = !!req.body.isAdmin; 
-    // await Promise.all([
-    //   body(Nombre).notEmpty() .trim() .withMessage("Debes ingresar un nombre"),
-    //   check(Email)
-    //     .notEmpty() .withMessage("Debes ingresar un email")
-    //     .isEmail() .withMessage("Debes ingresar un formato de email válido"),
-    //   check(Contraseña)
-    //     .notEmpty() .withMessage("Debes ingresar una contraseña")
-    //     .isLength({ min: 8, max: 15 }) .withMessage("La contraseña debe contener entre 8 a 15 caracteres."),
-    //   check(Direccion) .notEmpty() .withMessage("debes ingresar una direccion"),
-    //   check(Telefono) .notEmpty() .withMessage("debes ingresar un telefono")
-    //     .matches(/^\d{10}$/) .withMessage("El número de teléfono debe tener 10 dígitos"),
-    //   check(Fecha_de_registro)
-    //     .notEmpty() .withMessage("Debes ingresar una fecha de registro")
-    //     .isISO8601({ strict: false }) .withMessage("La fecha debe estar en formato ISO 8601 (yyyy-mm-dd)"),
-    //   check(isAdmi)
-    //     .notEmpty() .withMessage("Debes ingresar un valor para isAdmin")
-    //     .isBoolean() .withMessage("El campo debe ser un valor booleano (true o false)"),     
-    // ]);
-
-    // // Verificar si hay errores de validación
-    // const errors = validationResult(req.body);
-    // console.log(req)
-    // if (!errors.isEmpty()) {
-    //   return res.status(400).json({ errors: errors.array() });
-    // }
-    if(!Nombre|| !Email || !Contraseña || !Direccion || !Telefono || !Fecha_de_registro ){
-      return res.status(400).json({access: 'Datos incompletos'})
-   }
-    // Verificar si el usuario ya existe
-    const existingUser = await User.findOne({ where: { Nombre } });
+  try {
+    const { Nombre, Email } = req.body;
+    const existingUser = await User.findOne({ where: { Email } });
     if (existingUser) {
-      return res.status(400).send("El usuario ya existe");
+      console.log("usuario ya existe")
+      return res.status(400).send("usuario ya existe");
     }
-    // Registrar el usuario nuevo
-    await User.create({
-      Nombre,
-      Email,
-      Contraseña,
-      Direccion,
-      Telefono,
-      Fecha_de_registro,
-      isAdmin: isAdmi,
-    });
-  
-    res.status(200).json({ message: "Usuario creado exitosamente" });
+    const usuarioCreado = await createUser(Nombre, Email);
+    console.log("usuario creado :",usuarioCreado.dataValues.id);
+    res.status(200).json({ message: "Usuario creado exitosamente", id:usuarioCreado.dataValues.id });
   } catch (error) {
-    console.error("Error en la validación:", error);
+    console.error("Error al crear el usuario:", error.message);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 };
 
+
 ///**********OBTENER USUARIO****************** */
 const getUsers = async (req, res)=>{
-    const {Nombre}= req.params
+    const {email}= req.params
     try {
-      if (!Nombre) {
-        return res.status(400).send("Ingrese un Nombre");
+      if (!email) {
+        return res.status(400).send("Ingrese un email");
       }
       const user = await User.findOne({ 
-        where: {Nombre}, 
+        where: {email}, 
        });
+       console.log(user)
       if (!user) {
         return res.status(400).send("Usuario inexistente");
       }
@@ -168,5 +133,5 @@ module.exports = {
     newUser, 
     getUsers,
     getAllUsers,
-    registerHandler
+    newUser
 }

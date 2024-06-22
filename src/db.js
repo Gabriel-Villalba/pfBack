@@ -8,7 +8,9 @@ const Categories = require('./Models/Categories.js')
 const Products = require('./Models/Products.js')
 const Orders = require('./Models/Orders.js')
 const Inventary = require('./Models/Inventary.js')
-const Detalles_pedidos = require('./Models/Detalles_pedidos.js')
+const Detalles_pedidos = require('./Models/Detalles_pedidos.js');
+const Carrito = require('./Models/Carrito.js');
+const ProductCart = require("./Models/ProductCart")
 //const Product_Categories = require('./Models/Products_Categories.js')
 //const { v4: uuidv4 } = require('uuid');
 
@@ -51,10 +53,12 @@ Products(sequelize);
 Orders(sequelize);
 Inventary(sequelize);
 Detalles_pedidos(sequelize);
+Carrito(sequelize);
+ProductCart(sequelize)
 
 
 //const { User, Category, Product, Order, Inv, Detalle_pedido,} = sequelize.models;
-const {User, Order,Category, Product} = sequelize.models;
+const {User, Order,Category, Product, Cart, ProducCart} = sequelize.models;
 
 
 Product.belongsToMany(Category, { through: 'Product_Category'},{ timestamps: false });
@@ -70,7 +74,10 @@ Category.belongsToMany(Product, { through: 'Product_Category'},{ timestamps: fal
 User.hasMany(Order, { foreignKey: 'User_id' });
 Order.belongsTo(User, { foreignKey: 'User_id' });
 
+User.belongsTo(Cart, { throug:'userCart' });
+Cart.belongsTo(User, { throug:'userCart' });
 
+ProducCart.belongsTo(sequelize.models.Product, {foreignKey: 'id_products'});
 
 const categories = [
  
@@ -84,26 +91,19 @@ const categories = [
   { name: 'Formal' }
 ];
 
-// const cargarCategorias = async () => {
+const cargarCategorias = async () => {
 
-//   try {
-//     await Category.bulkCreate(categories);
-//     console.log('Categorias cargadas');
-//     } catch (error) {
-//       console.log(error);
-//       } 
-//       };
-// cargarCategorias()
-//     await sequelize.sync();
+  try {
+    await Category.bulkCreate(categories);
+    console.log('Categorias cargadas');
+    } catch (error) {
+      console.log(error);
+      
+    }
+};
+//cargarCategorias ()
 
-//     await Category.bulkCreate(categories);
-//     console.log('Categorías creadas exitosamente.');
 
-//   } catch (error) {
-//     console.error('Error al crear las categorías:', error);
-//   }
-// };
-//
 const products = [
   {
     Nombre: "Blusa Blanca",
@@ -319,7 +319,7 @@ const cargarUsers = async () => {
   Telefono: "04121049760"
 }
 ]
-// cargarUsers()
+//cargarUsers()
 module.exports = {
 
 ...sequelize.models, 

@@ -7,7 +7,8 @@ const categories = require ("./categoriesRouter.js")
 //const stock = require ("./stockRouter.js")
 //const record = require ("./recordRoutes.js")
 const login = require ("./loginRouter.js")
-//const report = require ("./reportRouter.js")
+const cart = require ("./cartRouter.js")
+const productCart = require ("./productCartRouter.js")
 
 const router = Router();
 
@@ -21,8 +22,9 @@ router.use('/products', products)
 router.use('/categories', categories);
 //router.use('/sales', sales);//ventas
 //router.use('/stock',stock);
-//router.use('/record',record);// registro
+router.use('/productCart',productCart);// registro
 router.use('/login', login);
+router.use('/cart', cart);
 //router.use('/report',report);// reportes
 
 module.exports = router
