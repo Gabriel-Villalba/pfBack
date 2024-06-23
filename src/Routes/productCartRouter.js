@@ -3,7 +3,7 @@ const productCartRouter = Router()
 const{getAllProductsInCart,addProductToCart ,deleteProductsCart }= require("../controllers/productCart")
 
 productCartRouter.post("/addProduct" ,addProductToCart )
-productCartRouter.get("/getAllProducts" ,getAllProductsInCart)
-productCartRouter.delete("/deleteProducts" ,deleteProductsCart)
+productCartRouter.get("/getAllProducts/:idCart" ,getAllProductsInCart)
+productCartRouter.delete("/deleteProducts/:idCart" ,deleteProductsCart)
 
 module.exports = productCartRouter

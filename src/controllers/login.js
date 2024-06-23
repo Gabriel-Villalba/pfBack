@@ -1,4 +1,4 @@
-const { User, Cart, ProducCart } = require('../db')
+const { User, Cart,Product, ProducCart } = require('../db')
 const createUser = require("../handlers/createUsers")
 
 // mi funcion "validate" le llega por parametros un email y una passw
@@ -61,12 +61,18 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         if (existingUser) {
             // El usuario ya existe, verificamos si tiene un carrito
             const userCart = await findUserCart(existingUser.id);
-            console.log("EL ID del carrito es : ",existingUser.dataValues.CartId)
+            //console.log("EL ID del carrito es : ",userCart)
 
             if (userCart) {
-                console.log(`El usuario ${existingUser.Nombre} tiene un carrito.`);
-                const productCart = await ProducCart.findAll({where: {idCart :existingUser.dataValues.CartId }})
-                res.status(200).json({ hasCart: true, cartId:existingUser.dataValues.CartId , id:existingUser.id, productCart:productCart });
+                
+                //const idCart = existingUser.dataValues.CartId
+                // const productCart = await ProducCart.findAll({where: {userCart}, 
+                //     include: { //incluyo tabla Products para taer todos los datos del producto
+                //         model: Product,
+                //         attributes: ['Nombre','Precio', 'Stock', 'Imagen_URL', 'onOffer', 'Brand'],
+                // }})
+                // console.log(productCart)
+                res.status(200).json({ hasCart: true, cartId:existingUser.dataValues.CartId , id:existingUser.id});
             } else {
                 console.log('Crear un carrito para el usuario...');
                 res.status(200).json({ hasCart: false,id:existingUser.id });
@@ -97,8 +103,8 @@ async function findUserCart(id) {
        // console.log(user)
 
         if (user && user.CartId) {
-            console.log(`El usuario con ID ${id} tiene un carrito.`);
-            return user.Cart;
+            //console.log(`El usuario con ID ${id} tiene un carrito.`, user.Cart.id);
+            return user.Cart.id;
         } else {
             console.log(`El usuario con ID ${id} no tiene un carrito.`);
             return null;

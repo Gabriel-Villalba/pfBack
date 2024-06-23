@@ -8,12 +8,16 @@ module.exports = (sequelize) => {
             allowNull: false,
             primaryKey: true,
         },
-        id_products :{
+        id_products: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
-            unique: false,
             allowNull: false,
-            primaryKey: true,
+            references: {
+                model: 'Products', 
+                key: 'id', 
+                onDelete: 'NO ACTION', 
+                onUpdate: 'CASCADE', 
+            },
         },
         amount:{
             type: DataTypes.INTEGER

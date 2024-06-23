@@ -6,7 +6,7 @@ exports.addProductToCart = async (req, res) => {
     try {
         const {  id_products, amount, idCart } = req.body;
         //const pro = productId.product.id
-        console.log(req.body)
+        console.log("id cart: ",req.body)
         const newProduct = await ProducCart.create({
             id_products,
             amount,
@@ -24,17 +24,19 @@ exports.addProductToCart = async (req, res) => {
 
 exports.getAllProductsInCart = async (req, res) => {
     try {
-        const { idCart } = req.query; 
-
-
+        const { idCart } = req.params; 
         const productsInCart = await ProducCart.findAll({
             where: { idCart }, 
-            include: { //incluyo tabla Products para taer todos los datos del producto
+            include: { 
                 model: Product,
                 attributes: ['Nombre','Precio', 'Stock', 'Imagen_URL', 'onOffer', 'Brand'],
         }
     });
-        res.status(200).json(productsInCart);
+    const simplifiedResponse = productsInCart.map(item => ({
+        products: item.Product,
+        amount: item.amount,
+    }));
+        res.status(200).json(simplifiedResponse);
     } catch (error) {
         console.error('Error al obtener los productos del carrito:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
@@ -45,8 +47,8 @@ exports.getAllProductsInCart = async (req, res) => {
 
 exports.deleteProductsCart= async (req, res) => {
     try {
-        const { idCart } = req.query;
-        await ProductCart.destroy({
+        const { idCart } = req.params;
+        await ProducCart.destroy({
             where: { idCart },
             });
             res.status(200).json({ message: 'Carrito eliminado con éxito' });
