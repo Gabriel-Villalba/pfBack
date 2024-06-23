@@ -39,6 +39,11 @@ module.exports = (sequelize) => {
         Brand: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        Delete:{
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     }, { timestamps: false });
 }

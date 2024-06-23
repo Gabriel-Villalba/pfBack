@@ -1,21 +1,22 @@
 const { Product, Category } = require("../db.js");
 
-// traigo todos los productos de la db
+//* traigo todos los productos de la db
 const getProducts = async (req , res) => {
   try {
     
     const products = await Product.findAll({
+      where: {
+        Delete: false, //* si esta en "false" no fueron borrados
+      },
       include: {
         //Incluime el model Category
         model: Category,
         //TRAEME EL ATRIBUTO NAME
-        attributes: ["name"],
-        
+        attributes: ["name"],   
         through: {},
       },
     });
-    return res.status(200).json(products);
-    
+    return res.status(200).json(products);  
   } catch (error) {
     return res.status(500).send("Error interno del servidor");
   }
