@@ -121,6 +121,7 @@ const deleteProduct = async (req, res) => {
 };
 //update
 
+
 const updateProduct = async (req, res) => {
   const {id, Nombre, Precio, Descripcion,Stock, Imagen_URL, onOffer, Brand, name} = req.body;
 
