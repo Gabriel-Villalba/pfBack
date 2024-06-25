@@ -74,9 +74,9 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         } else {
             console.log('Usuario no encontrado. Crear nuevo usuario...');
             // Creamos un nuevo usuario
-            //  const isAdmin= true ;
-            // const user = await User.create({ Nombre, Email, isAdmin });
-            const user = await User.create({ Nombre, Email})
+            //  const isAdmin= true ;//* descomentar para crear administrador 
+            // const user = await User.create({ Nombre, Email, isAdmin });//* descomentar para crear administrador 
+            const user = await User.create({ Nombre, Email})//* comentar para crear administrador 
            console.log(user.dataValues.id)
             res.status(200).json({existing: true, hasCart: false, id :user.dataValues.id, userAdmin:userAdmin });
         }
