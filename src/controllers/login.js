@@ -46,11 +46,10 @@ const loginHandler = async (req, res) => {
 
 const registerHandler = async (req, res) => {//*varios cambios en este controller, 
                                              //*verifica si existe el usuario y si tiene carrito
-    try {
-        
+    try { 
         // Extraemos los datos del front-end: nombre, email y contraseña
         const { Nombre, Email } = req.body;
-       // console.log(Nombre, Email)
+      let userAdmin = false;
         // Comprobamos que los campos estén llenos
         if (!Nombre || !Email) {
             return res.status(400).json({ access: 'Datos incompletos' });
@@ -58,21 +57,16 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         // Verificamos si ya existe un usuario con el mismo email en la base de datos
         const existingUser = await User.findOne({ where: { Email } });
         
+
         if (existingUser) {
+            
+            existingUser.dataValues.isAdmin === true ? userAdmin= true : userAdmin = false
             // El usuario ya existe, verificamos si tiene un carrito
             const userCart = await findUserCart(existingUser.id);
-            //console.log("EL ID del carrito es : ",userCart)
 
+            //console.log("EL ID del carrito es : ",userCart)
             if (userCart) {
-                
-                //const idCart = existingUser.dataValues.CartId
-                // const productCart = await ProducCart.findAll({where: {userCart}, 
-                //     include: { //incluyo tabla Products para taer todos los datos del producto
-                //         model: Product,
-                //         attributes: ['Nombre','Precio', 'Stock', 'Imagen_URL', 'onOffer', 'Brand'],
-                // }})
-                // console.log(productCart)
-                res.status(200).json({ hasCart: true, cartId:existingUser.dataValues.CartId , id:existingUser.id});
+                res.status(200).json({ hasCart: true, cartId:existingUser.dataValues.CartId , id:existingUser.id , userAdmin:userAdmin});
             } else {
                 console.log('Crear un carrito para el usuario...');
                 res.status(200).json({ hasCart: false,id:existingUser.id });
@@ -80,20 +74,17 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         } else {
             console.log('Usuario no encontrado. Crear nuevo usuario...');
             // Creamos un nuevo usuario
-            const user = await User.create({ Nombre, Email });
+            //  const isAdmin= true ;
+            // const user = await User.create({ Nombre, Email, isAdmin });
+            const user = await User.create({ Nombre, Email})
            console.log(user.dataValues.id)
-            res.status(200).json({existing: true, hasCart: false, id :user.dataValues.id  });
+            res.status(200).json({existing: true, hasCart: false, id :user.dataValues.id, userAdmin:userAdmin });
         }
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
 };
-/*const productos = await Product.findAll({
-      where: {
-        Nombre: {
-          [Op.iLike]: `%${name}%`, // Búsqueda insensible a mayúsculas/minúsculas
-        },
-      },*/ 
+
 //********VALIDAR SI TIENE CARRITO*************** */
 async function findUserCart(id) {
     try {
