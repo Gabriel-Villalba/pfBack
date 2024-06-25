@@ -101,7 +101,7 @@ const cargarCategorias = async () => {
       
     }
 };
-//cargarCategorias ()
+// cargarCategorias ()
 
 
 const products = [
