@@ -38,7 +38,7 @@ const deleteCategory = async(req , res) => {
         res.status(200).json(category);
 
         } catch (error) {
-            res.status(500).json({ error: 'Error al eliminar la categoría de ropa' });
+            res.status(500).json({ error: 'Error al eliminar la categoría de ropa'});
         }
 }
 

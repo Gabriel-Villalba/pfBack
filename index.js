@@ -1,16 +1,15 @@
 require('dotenv').config();
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const PORT = process.env.PORT || 3001; 
-
-// console.log('Environment Variables:', process.env);
-// console.log('Current Directory:', __dirname);
-// Sync the database and start the server
-conn.sync()
+const { PORT } = process.env || 3001;
+  
+//conn.sync({ alter: true })
+conn.sync()   
+//conn.sync( {force: true})
   .then(() => {
     server.listen(PORT, () => {
       console.log(`Server listening at ${PORT}`);
-    });
+    });   
   })
   .catch(err => {
     console.error('Error syncing database:', err);
