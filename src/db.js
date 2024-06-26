@@ -2,12 +2,17 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path'); 
+const path = require('path'); 
 const axios = require('axios');
 const Users = require('./Models/Users.js')
 const Categories = require('./Models/Categories.js')
 const Products = require('./Models/Products.js')
 const Orders = require('./Models/Orders.js')
 const Inventary = require('./Models/Inventary.js')
+const Detalles_pedidos = require('./Models/Detalles_pedidos.js');
+const Carrito = require('./Models/Carrito.js');
+const ProductCart = require("./Models/ProductCart")
+//const Product_Categories = require('./Models/Products_Categories.js')
 const Detalles_pedidos = require('./Models/Detalles_pedidos.js');
 const Carrito = require('./Models/Carrito.js');
 const ProductCart = require("./Models/ProductCart")
@@ -25,6 +30,12 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
+
+
+/*const sequelize = new Sequelize(DB_DEPLOY, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+});*/
 
 
 /*const sequelize = new Sequelize(DB_DEPLOY, {
@@ -77,7 +88,16 @@ ProductCart(sequelize)
 //const { User, Category, Product, Order, Inv, Detalle_pedido,} = sequelize.models;
 const {User, Order,Category, Product, Cart, ProducCart} = sequelize.models;
 
+Carrito(sequelize);
+ProductCart(sequelize)
 
+
+//const { User, Category, Product, Order, Inv, Detalle_pedido,} = sequelize.models;
+const {User, Order,Category, Product, Cart, ProducCart} = sequelize.models;
+
+
+Product.belongsToMany(Category, { through: 'Product_Category'},{ timestamps: false });
+Category.belongsToMany(Product, { through: 'Product_Category'},{ timestamps: false });
 Product.belongsToMany(Category, { through: 'Product_Category'},{ timestamps: false });
 Category.belongsToMany(Product, { through: 'Product_Category'},{ timestamps: false });
 
@@ -85,6 +105,11 @@ Category.belongsToMany(Product, { through: 'Product_Category'},{ timestamps: fal
 // Order.belongsToMany(Product, { through: Detalle_pedido, foreignKey: 'Order_id', otherKey: 'Product_id' });
 // Product.belongsToMany(Order, { through: Detalle_pedido, foreignKey: 'Product_id', otherKey: 'Order_id' });
 
+// Order.belongsToMany(Product, { through: Detalle_pedido, foreignKey: 'Order_id', otherKey: 'Product_id' });
+// Product.belongsToMany(Order, { through: Detalle_pedido, foreignKey: 'Product_id', otherKey: 'Order_id' });
+
+// Product.hasOne(Inv, { foreignKey: 'Product_id' });
+// Inv.belongsTo(Product, { foreignKey: 'Product_id' });
 // Product.hasOne(Inv, { foreignKey: 'Product_id' });
 // Inv.belongsTo(Product, { foreignKey: 'Product_id' });
 

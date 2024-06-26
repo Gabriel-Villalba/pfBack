@@ -44,17 +44,6 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             allowNull: true,
             defaultValue: false
-        },
-
-        isActiv: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true
-        },
-        isLogin:{
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
 
         }
     }, { timestamps: false });

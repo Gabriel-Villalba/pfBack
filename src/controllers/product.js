@@ -11,15 +11,15 @@ const getProduct = async (req, res) => {
     if (!id) {
       return res.status(400).send("Ingrese un producto");
     }
-    const producto = await Product.findOne({ 
-      where: { id }, 
+    const producto = await Product.findOne({
+      where: { id },
       include: [
-      {
-        model: Category,
-        attributes: ["name"]
-      }
-    ]
-     });
+        {
+          model: Category,
+          attributes: ["name"],
+        },
+      ],
+    });
     if (!producto) {
       return res.status(400).send("producto no existe");
     }
@@ -34,7 +34,7 @@ const getProduct = async (req, res) => {
 const getProductName = async (req, res) => {
   //console.log(req.params)
   const { name } = req.params;
-    try {
+  try {
     if (!name) {
       return res.status(400).send("Ingrese un producto");
     }
@@ -62,11 +62,19 @@ const getProductName = async (req, res) => {
   }
 };
 
-
 // *********************CREATE************************/
 const createProduct = async (req, res) => {
   try {
-    const { Nombre, Precio, Descripcion,Stock, Imagen_URL, onOffer, Brand, name} = req.body;
+    const {
+      Nombre,
+      Precio,
+      Descripcion,
+      Stock,
+      Imagen_URL,
+      onOffer,
+      Brand,
+      name,
+    } = req.body;
     // Verifica si todos los campos obligatorios están presentes
     if (!Nombre || !Precio || !Descripcion || !Imagen_URL) {
       return res.status(400).send("Completar los campos obligatorios");
@@ -84,16 +92,16 @@ const createProduct = async (req, res) => {
       Stock,
       Imagen_URL,
       onOffer,
-      Brand
+      Brand,
     });
     // Asocia las categorías al producto
-    const categories = await Category.findAll({ where: {name: name } });
-   
+    const categories = await Category.findAll({ where: { name: name } });
+
     newProduct.addCategory(categories);
     //
     return res.status(200).json(newProduct);
   } catch (error) {
-    console.error("Error al crear el producto:",error.message);
+    console.error("Error al crear el producto:", error.message);
     return res.status(500).send("Error interno del servidor");
   }
 };
@@ -117,27 +125,35 @@ const deleteProduct = async (req, res) => {
     console.error("Error al eliminar la acción:", error);
     res.status(500).json({ error: "Error al eliminar la acción" });
   }
- 
 };
 //update
 
 const updateProduct = async (req, res) => {
-  const {id, Nombre, Precio, Descripcion,Stock, Imagen_URL, onOffer, Brand, name} = req.body;
+  const {
+    id,
+    Nombre,
+    Precio,
+    Descripcion,
+    Stock,
+    Imagen_URL,
+    onOffer,
+    Brand,
+    name,
+  } = req.body;
 
   try {
     // Primero, verifica si el producto existe
     //const existingProduct = await Product.findByPk(id);
 
-    const existingProduct = await Product.findOne({ 
-      where: { id }, 
+    const existingProduct = await Product.findOne({
+      where: { id },
       include: [
-      {
-        model: Category,
-        attributes: ["name"]
-      }
-    ]
-
-     });
+        {
+          model: Category,
+          attributes: ["name"],
+        },
+      ],
+    });
     if (!existingProduct) {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
@@ -149,9 +165,9 @@ const updateProduct = async (req, res) => {
     existingProduct.Imagen_URL = Imagen_URL;
     existingProduct.onOffer = onOffer;
     existingProduct.Brand = Brand;
-    existingProduct.Categories.map((category)=> category.name = name)
+    existingProduct.Categories.map((category) => (category.name = name));
     // Guarda los cambios en la base de datos
-    console.log(existingProduct)
+    console.log(existingProduct);
     await existingProduct.save();
 
     return res
@@ -163,4 +179,10 @@ const updateProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProduct, getProductName, createProduct, deleteProduct, updateProduct };
+module.exports = {
+  getProduct,
+  getProductName,
+  createProduct,
+  deleteProduct,
+  updateProduct,
+};
