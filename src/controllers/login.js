@@ -56,7 +56,6 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         }
         // Verificamos si ya existe un usuario con el mismo email en la base de datos
         const existingUser = await User.findOne({ where: { Email } });
-        
 
         if (existingUser) {
             

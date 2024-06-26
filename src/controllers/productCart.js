@@ -5,16 +5,24 @@ const {Product, ProducCart} = require("../db.js");
 exports.addProductToCart = async (req, res) => {
     try {
         const amount = req.body.quantity
-        const {  id_products,idCart } = req.body;
-        //const pro = productId.product.id
-        console.log("id cart: ",req.body)
-        const newProduct = await ProducCart.create({
-            id_products,
-            amount,
-            idCart,
-        });
+        const {  id_products, idCart } = req.body;
 
-        res.status(201).json(newProduct);
+        const existingProduct = await validateProductsInCart(idCart, id_products)
+        console.log(existingProduct)
+        if ( !existingProduct) {
+            const newProduct = await ProducCart.create({
+                id_products,
+                amount,
+                idCart,
+            });
+            console.log("guardado con exito")
+            res.status(201).json(newProduct);
+
+        } else {
+            res.status(201).json({ message: "El producto ya existe en el carrito" });
+            
+        }
+
     } catch (error) {
         console.error('Error al agregar el producto al carrito:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
@@ -34,9 +42,8 @@ exports.getAllProductsInCart = async (req, res) => {
                 attributes: ['id','Nombre','Precio', 'Stock', 'Imagen_URL', 'onOffer', 'Brand']
         }
     });
-    const simplifiedResponse = productsInCart.map(item => ({
-       
-        ...item.Product.dataValues, // Aquí se guarda directamente el contenido de Product
+    const simplifiedResponse = productsInCart.map(item => ({   
+        ...item.Product.dataValues,
         amount: item.amount,
         id: item.id
     }));
@@ -47,7 +54,6 @@ exports.getAllProductsInCart = async (req, res) => {
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 };
-
 //********************delete carrito************************** */
 
 exports.deleteProductsCart= async (req, res) => {
@@ -77,5 +83,31 @@ exports.deleteOneProductCart= async (req, res) => {
             }
 
 }
+
+
+const validateProductsInCart = async (idCart, id_products) => {
+    try {
+       // console.log(idCart);
+        //console.log(id_products);
+        const productsInCart = await ProducCart.findAll({
+            where: { idCart },
+        });
+        const productExists = productsInCart.filter(product => product.dataValues.id_products === id_products);
+        //console.log(productExists)
+        if (productExists.length > 0) {
+            console.log('El producto Pepe ya está en el carrito.');
+            return true;
+        } else {
+            console.log('El producto no está en el carrito.');
+            return false;
+        }
+    } catch (error) {
+        console.error('Error al eliminar el carrito:', error);
+        // res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};
+
+
+
 
 
