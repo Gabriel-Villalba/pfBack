@@ -18,12 +18,9 @@ const createPreference = async (req, res) => {
         },
       ],
       back_urls: {
-        success:
-          "https://pf-front-3u9ene45k-gabrielvillalbas-projects.vercel.app/",
-        failure:
-          "https://pf-front-3u9ene45k-gabrielvillalbas-projects.vercel.app/",
-        pending:
-          "https://pf-front-3u9ene45k-gabrielvillalbas-projects.vercel.app/",
+        success: "https://pf-front-end-bay.vercel.app/",
+        failure: "https://pf-front-end-bay.vercel.app/",
+        pending: "https://pf-front-end-bay.vercel.app/",
       },
       auto_return: "approved",
     };
