@@ -32,10 +32,8 @@ const createCategory = async(req , res) => {
 }
 
 const deleteCategory = async(req , res) => {
-    console.log(req.params)
     try {
-        const { id } = req.params ;   
-            
+        const { id } = req.query;       
         const category = await Category.destroy({ where: { id } });
         res.status(200).json(category);
 

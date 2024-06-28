@@ -18,27 +18,23 @@ const validate = async (Email,Contraseña) => {
     } else {
         return false
     }
-    }
-    
-    
-    const loginHandler = async (req, res) => {
-        
-        // traigo del front email/passw
-        
-        const { Email, Contraseña, Nombre } = req.body
-        
-        try {
-            
-            // con mi funcion "validate" verifico si esta registrado o no
-            // pasandole por parametros el email y la passw del front
-            
-            const login = await validate(Email, Contraseña)
-         
+}
+
+
+const loginHandler = async (req, res) => {
+
+    // traigo del front email/passw
+
+    const { Email, Contraseña } = req.body
+
+    try {
+
+        // con mi funcion "validate" verifico si esta registrado o no
+        // pasandole por parametros el email y la passw del front
+
+        const login = await validate(Email, Contraseña)
 
         if (login) {
-            const html = getTemplate("bienvenida", Nombre);
-         await sendEmail(Email,`Bienvenido ${Nombre}`, html)
-
             res.status(200).json({ access: 'Se ha ingresado' })
         } else {
             res.status(200).json({ access: 'Clave incorrecta' })
@@ -60,6 +56,7 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         }
         // Verificamos si ya existe un usuario con el mismo email en la base de datos
         const existingUser = await User.findOne({ where: { Email } });
+        
 
         if (existingUser) {
             
