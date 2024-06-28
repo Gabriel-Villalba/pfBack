@@ -1,5 +1,5 @@
-const {sendEmail, getTemplate} = require("../email/nodemailer");
 const { User, Cart, ProducCart } = require('../db')
+const {sendEmail, getTemplate} = require("../email/nodemailer");
 const createUser = require("../handlers/createUsers")
 
 // mi funcion "validate" le llega por parametros un email y una passw

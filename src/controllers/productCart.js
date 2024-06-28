@@ -1,4 +1,4 @@
-const { ProducCart} = require("../db.js");
+const {Product, ProducCart} = require("../db.js");
 
  //**************AGREGAR PRODUCTOS**************************** */
 
@@ -29,8 +29,11 @@ exports.getAllProductsInCart = async (req, res) => {
 
         const productsInCart = await ProducCart.findAll({
             where: { idCart }, 
-        });
-
+            include: { //incluyo tabla Products para taer todos los datos del producto
+                model: Product,
+                attributes: ['Nombre','Precio', 'Stock', 'Imagen_URL', 'onOffer', 'Brand'],
+        }
+    });
         res.status(200).json(productsInCart);
     } catch (error) {
         console.error('Error al obtener los productos del carrito:', error);
