@@ -32,13 +32,15 @@ const createCategory = async(req , res) => {
 }
 
 const deleteCategory = async(req , res) => {
+    console.log(req.params)
     try {
-        const { id } = req.query;       
+        const { id } = req.params ;   
+            
         const category = await Category.destroy({ where: { id } });
         res.status(200).json(category);
 
         } catch (error) {
-            res.status(500).json({ error: 'Error al eliminar la categoría de ropa' });
+            res.status(500).json({ error: 'Error al eliminar la categoría de ropa'});
         }
 }
 

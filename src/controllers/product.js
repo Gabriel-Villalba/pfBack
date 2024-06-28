@@ -111,7 +111,8 @@ const deleteProduct = async (req, res) => {
       return res.status(404).json({ error: "producto no encontrado" });
     }
 
-    await product.destroy();
+    //await product.destroy();
+    await product.update({ Delete: true });
 
     res.status(200).send("Acción eliminada exitosamente");
   } catch (error) {
@@ -121,6 +122,7 @@ const deleteProduct = async (req, res) => {
  
 };
 //update
+
 
 const updateProduct = async (req, res) => {
   const {id, Nombre, Precio, Descripcion,Stock, Imagen_URL, onOffer, Brand, name} = req.body;

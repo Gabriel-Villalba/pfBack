@@ -5,6 +5,6 @@ const { getCategories, createCategory, updateCategory, deleteCategory } = requir
 categoriesRouter.get("/", getCategories)
 categoriesRouter.post("/create", createCategory)
 //categoriesRouter.put("/update" , updateCategory)
-categoriesRouter.delete("/delete", deleteCategory)
+categoriesRouter.delete("/delete/:id", deleteCategory)
 
 module.exports = categoriesRouter

@@ -104,6 +104,7 @@ const cargarCategorias = async () => {
 // cargarCategorias ()
 
 
+
 const products = [
   {
     Nombre: "Blusa Blanca",

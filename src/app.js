@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const router = require('./Routes/index.js');
 
+//const mercadopago = require('mercadopago');
+
+
+
 const cors = require("cors");
 const server = express();
 server.use(cors());

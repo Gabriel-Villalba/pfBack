@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
       pass: mail.pass,
     },
   });
-  const sendEmail = async (email, subject, html) => {
+  const sendEmail = async (email, subject, html) => {//* email cliente , asunto, cuerpo del correo
      try {
        await transporter.sendMail({
             from: '"BellaMuse" bellamusevip@gmail.com', // sender address
