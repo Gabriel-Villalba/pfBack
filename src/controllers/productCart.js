@@ -1,11 +1,13 @@
-const { ProductCart} = require("../db.js");
+const { ProducCart} = require("../db.js");
 
  //**************AGREGAR PRODUCTOS**************************** */
 
 exports.addProductToCart = async (req, res) => {
     try {
-        const { id_products, amount, idCart } = req.body;
-        const newProduct = await ProductCart.create({
+        const {  id_products, amount, idCart } = req.body;
+        //const pro = productId.product.id
+        console.log(req.body)
+        const newProduct = await ProducCart.create({
             id_products,
             amount,
             idCart,

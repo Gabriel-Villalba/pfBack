@@ -1,5 +1,5 @@
 const {sendEmail, getTemplate} = require("../email/nodemailer");
-const { User, Cart } = require('../db')
+const { User, Cart, ProducCart } = require('../db')
 const createUser = require("../handlers/createUsers")
 
 // mi funcion "validate" le llega por parametros un email y una passw
@@ -70,7 +70,8 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
 
             if (userCart) {
                 console.log(`El usuario ${existingUser.Nombre} tiene un carrito.`);
-                res.status(200).json({ hasCart: true, cartId:existingUser.dataValues.CartId , id:existingUser.id });
+                const productCart = await ProducCart.findAll({where: {idCart :existingUser.dataValues.CartId }})
+                res.status(200).json({ hasCart: true, cartId:existingUser.dataValues.CartId , id:existingUser.id, productCart:productCart });
             } else {
                 console.log('Crear un carrito para el usuario...');
                 res.status(200).json({ hasCart: false,id:existingUser.id });
@@ -86,7 +87,12 @@ const registerHandler = async (req, res) => {//*varios cambios en este controlle
         return res.status(400).json({ error: error.message });
     }
 };
-
+/*const productos = await Product.findAll({
+      where: {
+        Nombre: {
+          [Op.iLike]: `%${name}%`, // Búsqueda insensible a mayúsculas/minúsculas
+        },
+      },*/ 
 //********VALIDAR SI TIENE CARRITO*************** */
 async function findUserCart(id) {
     try {

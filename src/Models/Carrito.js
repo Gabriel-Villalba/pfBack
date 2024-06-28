@@ -9,11 +9,6 @@ module.exports = (sequelize) => {
             allowNull: false,
             primaryKey: true,
         },
-        id_products :{
-            type: DataTypes.STRING
-        },
-        cantProducts :{
-            type: DataTypes.INTEGER
-        }
+     
     }, { timestamps: false });
 }
