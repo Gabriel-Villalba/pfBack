@@ -119,6 +119,30 @@ const deleteProduct = async (req, res) => {
   }
  
 };
+
+//*******deshacer Delete */
+const deshacerSeleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findByPk(id);
+
+    if (!product) {
+      return res.status(404).json({ error: "producto no encontrado" });
+    }
+
+    //await product.destroy();
+    await product.update({ Delete: false });
+
+    res.status(200).send("Acción eliminada exitosamente");
+  } catch (error) {
+    console.error("Error al eliminar la acción:", error);
+    res.status(500).json({ error: "Error al eliminar la acción" });
+  }
+ 
+};
+
+
 //update
 
 
@@ -164,4 +188,4 @@ const updateProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProduct, getProductName, createProduct, deleteProduct, updateProduct };
+module.exports = { getProduct, getProductName, createProduct, deleteProduct, updateProduct, deshacerSeleteProduct };
