@@ -1,9 +1,13 @@
-const express = require('express');
-const router = express.Router();
+const { Router } = require("express");
+const usersRouter = Router();
+const { newUser, getUsers } = require("../controllers/users")
+//const { check } = require("express-validator")
 
-router.get('/', (req, res) => {
-    res.send('Users route');
-});
+usersRouter.post("/create", newUser); // crear usuario
+// usersRouter.post("/login", loginHandler)// accede al sistema
 
-module.exports = router;
+usersRouter.get ("/", getUsers) // listar usuarios
+// usersRouter.put ("/:id" , updateUser) // modificar usuarios
+// usersRouter.delete ("/:id" , deleteUser) // borrado logico
 
+module.exports = usersRouter;
