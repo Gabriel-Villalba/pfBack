@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const {CONTRASENADEAPLICACIONES, CORREO} = process.env;
 
+const {CONTRASENADEAPLICACIONES, CORREO} = process.env;
 const mail= {
   user: CORREO,
   pass: CONTRASENADEAPLICACIONES

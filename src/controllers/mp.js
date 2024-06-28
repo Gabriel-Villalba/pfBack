@@ -8,7 +8,7 @@ const createPreference = async (req, res) => {
         //"APP_USR-6952793342028548-062115-477c75a36a8cf02bfb9a1a09a8807a25-1866252207",
         "APP_USR-4034642779918978-062718-608b8f8e95632ec7250e320b2ef483b9-1866254135",
     });
-    console.log(req.body);
+    //console.log(req.body);
     const body = {
       items: [
         {
@@ -24,13 +24,15 @@ const createPreference = async (req, res) => {
         pending: "https://pf-front-3u9ene45k-gabrielvillalbas-projects.vercel.app/",
       },
       auto_return: "approved",
+
     };
-    console.log(req.body.title);
-    console.log(req.body.quantity);
-    console.log(req.body.unit_price);
+   
+    //console.log(req.body.title);
+    //console.log(req.body.quantity);
+    //console.log(req.body.unit_price);
     const preference = new Preference(client);
     const result = await preference.create({ body });
-
+  console.log(result);
     res.json({ id: result.id });
   } catch (error) {
     console.error("¡Ups! Hubo un error al crear la preferencia:", error);
